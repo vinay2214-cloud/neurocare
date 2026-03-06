@@ -8,7 +8,7 @@ __pycache__/
 *.sqlite3
 
 # Build outputs
-neurocare-frontend/dist/
+# neurocare-frontend/dist/ is committed for Render deployment
 
 # IDE
 .vscode/
