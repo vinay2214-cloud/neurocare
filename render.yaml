@@ -2,7 +2,7 @@ services:
   - type: web
     name: neurocare
     runtime: python
-    buildCommand: "./build.sh"
+    buildCommand: "bash build.sh"
     startCommand: "cd neurocare-backend && gunicorn --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker --bind 0.0.0.0:$PORT --timeout 120 app:app"
     envVars:
       - key: FLASK_ENV
