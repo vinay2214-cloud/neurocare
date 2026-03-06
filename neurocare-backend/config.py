@@ -20,7 +20,7 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///neurocare.db')
 
 
 config_map = {

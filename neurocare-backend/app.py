@@ -7,7 +7,9 @@ from flask_socketio import SocketIO, emit, join_room
 from config import get_config
 from models import db
 
-socketio = SocketIO(cors_allowed_origins="*", async_mode='threading')
+# Use gevent in production (Render), threading in dev
+_async_mode = 'gevent' if os.getenv('FLASK_ENV') == 'production' else 'threading'
+socketio = SocketIO(cors_allowed_origins="*", async_mode=_async_mode)
 
 FRONTEND_DIST = os.path.join(os.path.dirname(__file__), '..', 'neurocare-frontend', 'dist')
 
@@ -97,12 +99,29 @@ def sensor_stream_worker():
         time.sleep(1)
 
 
-if __name__ == '__main__':
+# Start sensor stream for both dev (main) and production (gunicorn import)
+def _start_sensor_stream():
     sensor_mode = os.getenv('SENSOR_MODE', 'mock')
     if sensor_mode == 'mock':
-        sensor_thread = threading.Thread(target=sensor_stream_worker, daemon=True)
-        sensor_thread.start()
+        if _async_mode == 'gevent':
+            import gevent
+            gevent.spawn(sensor_stream_worker)
+        else:
+            sensor_thread = threading.Thread(target=sensor_stream_worker, daemon=True)
+            sensor_thread.start()
         print("Mock sensor streaming started")
+
+
+_sensor_started = False
+
+if os.getenv('FLASK_ENV') == 'production' and not _sensor_started:
+    _sensor_started = True
+    _start_sensor_stream()
+
+
+if __name__ == '__main__':
+    if not _sensor_started:
+        _start_sensor_stream()
 
     print("NeuroCare Backend starting on http://localhost:5001")
     socketio.run(app, host='0.0.0.0', port=5001, debug=True, use_reloader=False, allow_unsafe_werkzeug=True)

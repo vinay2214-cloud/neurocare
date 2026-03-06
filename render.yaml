@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: neurocare
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "cd neurocare-backend && gunicorn --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker --bind 0.0.0.0:$PORT --timeout 120 app:app"
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: SENSOR_MODE
+        value: mock
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+      - key: NODE_VERSION
+        value: "20"
