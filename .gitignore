@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.db
+*.sqlite3
+
+# Build outputs
+neurocare-frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tunnel artifacts
+start_tunnel.py
+tunnel.js
+
+# Logs
+*.log
+npm-debug.log*

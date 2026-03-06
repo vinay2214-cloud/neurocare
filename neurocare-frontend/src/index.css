@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    font-family: 'Nunito', 'Segoe UI', Arial, sans-serif;
+  }
+  body {
+    @apply bg-nc-cream text-nc-grey-dark leading-relaxed text-lg;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  button, a, input, select, textarea {
+    @apply outline-none transition-all duration-safe;
+  }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    @apply outline-4 outline-nc-blue-soft outline-offset-2;
+  }
+}
+
+@layer components {
+  .nc-card {
+    @apply bg-nc-card rounded-xl3 shadow-md border border-nc-grey-pale p-6;
+  }
+  .nc-btn {
+    @apply min-h-[56px] min-w-[112px] rounded-full font-bold px-6 py-3 
+           transition-all duration-safe text-base
+           focus-visible:outline-4 focus-visible:outline-nc-blue-soft;
+  }
+  .nc-btn-primary {
+    @apply nc-btn bg-nc-blue-mid text-white hover:bg-nc-blue-deep;
+  }
+  .nc-btn-secondary {
+    @apply nc-btn bg-nc-beige text-nc-grey-dark hover:bg-nc-grey-pale;
+  }
+  .nc-btn-green {
+    @apply nc-btn bg-nc-green-mid text-white hover:bg-nc-green-deep;
+  }
+  .nc-btn-amber {
+    @apply nc-btn bg-nc-amber text-white hover:bg-nc-amber;
+  }
+  .nc-btn-terra {
+    @apply nc-btn bg-nc-terra text-white hover:bg-nc-terra;
+  }
+  .nc-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm;
+  }
+  .nc-badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold;
+  }
+  .nc-input {
+    @apply w-full rounded-xl2 border border-nc-grey-pale bg-white px-4 py-3 text-base
+           focus:border-nc-blue-mid focus:ring-2 focus:ring-nc-blue-soft
+           transition-all duration-safe;
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s ease-in-out infinite;
+}
+
+@keyframes breathing-inhale {
+  0% { transform: scale(0.92); }
+  100% { transform: scale(1.12); }
+}
+
+@keyframes breathing-exhale {
+  0% { transform: scale(1.12); }
+  100% { transform: scale(0.92); }
+}
